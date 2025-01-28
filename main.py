@@ -5,6 +5,7 @@ import asyncio
 import yt_dlp as youtube_dl  # Usar yt-dlp en lugar de youtube_dl
 from dotenv import load_dotenv
 import logic as l
+import commandapi as ca
 
 # Cargar token desde .env
 load_dotenv()
@@ -115,6 +116,35 @@ async def heh(ctx, count_heh=5):
 async def password(ctx, a=25):
     ctr = l.contra(a)
     await ctx.send(f"🔒 Tu contraseña es: `{ctr}`")
+
+@bot.command(name='meme')
+async def mimi(ctx):
+    img = l.meme()
+    await ctx.send(file = img)
+
+@bot.command(name='memes')
+async def momos(ctx):
+    img = l.memes()
+    await ctx.send(file = img)
+    
+@bot.command('duck')
+async def duck(ctx):
+    '''Una vez que llamamos al comando duck, 
+    el programa llama a la función get_duck_image_url'''
+    image_url = ca.duck_image()
+    await ctx.send(image_url)
+    
+@bot.command(name = "anime")
+async def anime(ctx, a):
+    query = a
+    anime_data = ca.get_anime_image(query)
+    if anime_data:
+        for anime in anime_data:
+            
+            image_url = anime['attributes']['posterImage']['small']
+            await ctx.send(f"Image URL: {image_url}")
+    else:
+        await ctx.send("No se pudieron obtener datos de anime.")
 
 # Ejecutar el bot
 bot.run(token)

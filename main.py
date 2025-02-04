@@ -5,7 +5,7 @@ import asyncio
 import yt_dlp as youtube_dl  # Usar yt-dlp en lugar de youtube_dl
 from dotenv import load_dotenv
 import logic as l
-import commandapi as ca
+import commandapi as ca, ambiente as am
 
 # Cargar token desde .env
 load_dotenv()
@@ -145,6 +145,35 @@ async def anime(ctx, a):
             await ctx.send(f"Image URL: {image_url}")
     else:
         await ctx.send("No se pudieron obtener datos de anime.")
+
+@bot.command(name = "eco")
+async def eco(ctx):
+    menu = (
+        "**🌍 ¿Qué quieres aprender hoy? 🌱**\n"
+        "1️⃣ Reducción de residuos\n"
+        "2️⃣ Ideas para reutilizar y reciclar\n"
+        "3️⃣ Consumo Responsable\n\n"
+        "Responde con el número de la opción que deseas conocer. ⬇️"
+    )
+
+    await ctx.send(menu)
+    def check(m):
+        return m.author == ctx.author and m.channel == ctx.channel and m.content.isdigit()
+    try: 
+        msg = await bot.wait_for('message', check = check, timeout = 10)
+        opcion = int(msg.content)
+        
+        if opcion == 1:   
+            await ctx.send(embed = am.etiqueta_reducir())
+            
+        #Poner las demas opciones elif 
+        else:
+            await ctx.send('❌ Opción no válida. Intenta de nuevo.')
+            
+    except TimeoutError:
+        await ctx.send('⏳ No respondiste a tiempo. Intenta de nuevo con `/eco`.')
+          
+
 
 # Ejecutar el bot
 bot.run(token)

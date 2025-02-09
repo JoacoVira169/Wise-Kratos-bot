@@ -150,9 +150,10 @@ async def anime(ctx, a):
 async def eco(ctx):
     menu = (
         "**🌍 ¿Qué quieres aprender hoy? 🌱**\n"
-        "1️⃣ Reducción de residuos\n"
-        "2️⃣ Ideas para reutilizar y reciclar\n"
-        "3️⃣ Consumo Responsable\n\n"
+        "1️⃣ Reducción de residuos alimentarios\n"
+        "2️⃣ Ideas para separar y reciclar\n"
+        "3️⃣ Evitar el uso de bolsas de plástico\n"
+        "4️⃣Reutilizar los restos organicos como compost \n\n"
         "Responde con el número de la opción que deseas conocer. ⬇️"
     )
 
@@ -166,7 +167,15 @@ async def eco(ctx):
         if opcion == 1:   
             await ctx.send(embed = am.etiqueta_reducir())
             
-        #Poner las demas opciones elif 
+        elif opcion == 2:
+            await ctx.send(embed = am.etiqueta_separar_y_reciclar()) 
+            
+        elif opcion == 3:
+            await ctx.send(embed = am.etiqueta_evitar_usode_plastico())
+            
+        elif opcion == 4:
+            await ctx.send(embed = am.etiqueta_hacer_compost_casero())
+        
         else:
             await ctx.send('❌ Opción no válida. Intenta de nuevo.')
             
